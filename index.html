@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Donation Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <h1>Donation Tracker</h1>
+
+  <!-- Donation Form -->
+  <form id="donationForm">
+
+    <input type="text" id="charity" placeholder="Charity Name">
+
+    <input type="number" id="amount" placeholder="Amount">
+
+    <input type="date" id="date">
+
+    <input type="text" id="message" placeholder="Message">
+
+    <button type="submit">Add Donation</button>
+
+  </form>
+
+  <!-- Donation Table -->
+<table border="1">
+
+  <thead>
+    <tr>
+      <th>Charity</th>
+      <th>Amount</th>
+      <th>Date</th>
+      <th>Message</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+
+  <tbody id="tableBody">
+  </tbody>
+
+</table>
+
+<h3>Total: $<span id="total">0</span></h3>
+
+<script src="donation.js"></script>
+</body>
+</html>
