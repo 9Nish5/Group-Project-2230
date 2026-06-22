@@ -49,14 +49,14 @@ function updateTable() {
 
   tableBody.innerHTML = "";
 
-  donations.forEach(function (d) {
+  donations.forEach(function (d, index) {
     const row = `
       <tr>
         <td>${d.charity}</td>
         <td>${d.amount}</td>
         <td>${d.date}</td>
         <td>${d.message}</td>
-        <td>---</td>
+        <td><button onclick="deleteDonation(${index})">Delete</button></td>
       </tr>
     `;
 
