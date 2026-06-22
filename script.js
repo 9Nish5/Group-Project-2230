@@ -2,7 +2,7 @@
 const form = document.getElementById("donationForm");
 
 // temporary array to store donations
-let donations = [];
+let donations = JSON.parse(localStorage.getItem("donations")) || [];
 
 // form submit event
 form.addEventListener("submit", function (e) {
@@ -69,3 +69,6 @@ function updateTable() {
 
   document.getElementById("total").textContent = total;
 }
+
+localStorage.setItem("donations", JSON.stringify(donations));
+
