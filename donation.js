@@ -68,7 +68,19 @@ function updateTable() {
   });
 
   document.getElementById("total").textContent = total;
+
+  localStorage.setItem("donations", JSON.stringify(donations));
 }
 
-localStorage.setItem("donations", JSON.stringify(donations));
+// delete function
+function deleteDonation(index) {
+  donations.splice(index, 1);
+  updateTable();
+}
+
+// load data when page opens
+updateTable();
+
+
+
 
