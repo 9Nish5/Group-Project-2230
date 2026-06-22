@@ -49,7 +49,11 @@ function updateTable() {
 
   tableBody.innerHTML = "";
 
+  let total = 0;
+
   donations.forEach(function (d, index) {
+    total += d.amount;
+
     const row = `
       <tr>
         <td>${d.charity}</td>
@@ -62,4 +66,6 @@ function updateTable() {
 
     tableBody.innerHTML += row;
   });
+
+  document.getElementById("total").textContent = total;
 }
