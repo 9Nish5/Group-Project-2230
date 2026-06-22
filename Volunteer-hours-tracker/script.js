@@ -1,5 +1,3 @@
-document.getElementById("volunteerForm").addEventListener("submit", handleSubmit);
-
 function handleSubmit(event) {
     event.preventDefault();
 
@@ -8,29 +6,7 @@ function handleSubmit(event) {
     let date = document.getElementById("date").value;
     let rating = document.getElementById("rating").value;
 
-    let isValid = false;
-
-    if (charityName == "") {
-        showError(document.getElementById("charityName"), "Charity name is required");
-        isValid = true;
-    }
-
-    if (hours == "") {
-        showError(document.getElementById("hours"), "Hours are required");
-        isValid = true;
-    }
-
-    if (date == "") {
-        showError(document.getElementById("date"), "Date is required");
-        isValid = true;
-    }
-
-    if (rating == "") {
-        showError(document.getElementById("rating"), "Rating is required");
-        isValid = true;
-    }
-
-    if (isValid) return;
+    let isValid = true;
 
     console.log(document.getElementById("error"));
 
@@ -39,34 +15,44 @@ function handleSubmit(event) {
 
     if (charityName == "") {
         showError(document.getElementById("charityName"), "Charity name is required");
-        return;
+        isValid = false;
     }
 
     if (hours == "") {
         showError(document.getElementById("hours"), "Hours are required");
-        return;
+        isValid = false;
     }
 
     if (date == "") {
         showError(document.getElementById("date"), "Date is required");
-        return;
+        isValid = false;
     }
 
     if (rating == "") {
         showError(document.getElementById("rating"), "Experience rating is required");
-        return;
+        isValid = false;
     }
 
+    if (!isValid) {
+    return;
+    }
+
+    if (hours < 0) {
+        showError(document.getElementById("hours"), "Hours cannot be negative");
+        return
+    }
 
     if (!/^[0-9]+(\.[0-9]+)?$/.test(hours)) {
         showError(document.getElementById("hours"), "Invalid Number");
         return;
     }
 
-    if (hours <= 0) {
+
+    if (hours == 0) {
         showError(document.getElementById("hours"), "Hours must be greater than 0");
         return;
     }
+    
 
 
     if (!/^[1-5]$/.test(rating)) {
@@ -97,4 +83,18 @@ function showError(inputElement, message) {
     errorDisplay.className = "error-message";
 
     container.appendChild(errorDisplay);
+}
+
+
+if (typeof window !== "undefined") {
+    window.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("volunteerForm");
+        if (form) {
+            form.addEventListener("submit", handleSubmit);
+        }
+    });
+}
+
+if (typeof module !== "undefined") {
+    module.exports = { handleSubmit };
 }
