@@ -1,0 +1,25 @@
+{
+  "name": "group-project-2230",
+  "version": "1.0.0",
+  "description": "",
+  "main": "donation.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/9Nish5/Group-Project-2230.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/9Nish5/Group-Project-2230/issues"
+  },
+  "homepage": "https://github.com/9Nish5/Group-Project-2230#readme",
+  "devDependencies": {
+    "jest": "^30.4.2",
+    "jest-environment-jsdom": "^30.4.1"
+  }
+}

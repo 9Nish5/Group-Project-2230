@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -8,24 +9,40 @@
 
 <body>
 
-  <h1>Donation Tracker</h1>
+  <!-- Header -->
 
-  <!-- Donation Form -->
-  <form id="donationForm">
+  <header>
+    <h1>Donation Tracker</h1>
+  </header>
 
-    <input type="text" id="charity" placeholder="Charity Name">
+  <!-- Navigation -->
 
-    <input type="number" id="amount" placeholder="Amount">
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Donations</a>
+  </nav>
 
-    <input type="date" id="date">
+  <!-- Main Content -->
 
-    <input type="text" id="message" placeholder="Message">
+  <main>
 
-    <button type="submit">Add Donation</button>
+```
+<!-- Donation Form -->
+<form id="donationForm">
 
-  </form>
+  <input type="text" id="charity" placeholder="Charity Name">
 
-  <!-- Donation Table -->
+  <input type="number" id="amount" placeholder="Amount">
+
+  <input type="date" id="date">
+
+  <input type="text" id="message" placeholder="Message">
+
+  <button type="submit">Add Donation</button>
+
+</form>
+
+<!-- Donation Table -->
 <table border="1">
 
   <thead>
@@ -44,7 +61,17 @@
 </table>
 
 <h3>Total: $<span id="total">0</span></h3>
+```
 
-<script src="donation.js"></script>
+  </main>
+
+  <!-- Footer -->
+
+  <footer>
+    <p>© 2026 Donation Tracker</p>
+  </footer>
+
+  <script src="donation.js"></script>
+
 </body>
 </html>
