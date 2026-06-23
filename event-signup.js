@@ -73,47 +73,61 @@ function clearAllErrors() {
  * MAIN FORM SUBMISSION HANDLER (Triggered by DOM)
  */
 function handleEventSignupSubmit(event) {
+    // 1. Force the browser to stop the default form submission
     if (event) event.preventDefault();
 
     clearAllErrors();
 
-    // Grab raw DOM nodes
     const eventNameInput = document.getElementById("eventName");
     const repNameInput = document.getElementById("repName");
     const repEmailInput = document.getElementById("repEmail");
     const roleInput = document.getElementById("role");
 
-    // Extract values safely
-    const eventVal = eventNameInput ? eventNameInput.value : "";
-    const nameVal = repNameInput ? repNameInput.value : "";
-    const emailVal = repEmailInput ? repEmailInput.value : "";
-    const roleVal = roleInput ? roleInput.value : "";
+    const eventVal = eventNameInput.value;
+    const nameVal = repNameInput.value;
+    const emailVal = repEmailInput.value;
+    const roleVal = roleInput.value;
 
-    // Run pure validation
     const validationErrors = validateSignupInput(eventVal, nameVal, emailVal, roleVal);
 
-    // If the error object has any keys, validation failed
+    // 2. Check for errors
     if (Object.keys(validationErrors).length > 0) {
-        if (validationErrors.eventName && eventNameInput) showError(eventNameInput, validationErrors.eventName);
-        if (validationErrors.repName && repNameInput) showError(repNameInput, validationErrors.repName);
-        if (validationErrors.repEmail && repEmailInput) showError(repEmailInput, validationErrors.repEmail);
-        if (validationErrors.role && roleInput) showError(roleInput, validationErrors.role);
+        if (validationErrors.eventName) showError(eventNameInput, validationErrors.eventName);
+        if (validationErrors.repName) showError(repNameInput, validationErrors.repName);
+        if (validationErrors.repEmail) showError(repEmailInput, validationErrors.repEmail);
+        if (validationErrors.role) showError(roleInput, validationErrors.role);
         
+        // STOP here! Do not proceed to save data.
         return false;
     }
 
-    // Passed validation! Populate the temporary data object
+    // Passed validation! 
     tempSignupObject = formatSignupData(eventVal, nameVal, emailVal, roleVal);
-    
+    console.log("Form submitted successfully:", tempSignupObject);
     return true;
 }
 
+
 // Hook to the browser DOM once loaded
+// Hook to the browser DOM
 if (typeof window !== "undefined") {
     window.addEventListener("DOMContentLoaded", () => {
         const form = document.getElementById("eventSignupForm");
+        
         if (form) {
-            form.addEventListener("submit", handleEventSignupSubmit);
+            // Ensure we handle the submit event correctly
+            form.addEventListener("submit", function(event) {
+                const isValid = handleEventSignupSubmit(event);
+                
+                if (!isValid) {
+                    event.preventDefault(); // Absolute kill switch
+                    event.stopPropagation(); // Prevents bubbling
+                    return false;
+                }
+                
+                // If valid, you can proceed here
+                console.log("Form is valid, processing...");
+            });
         }
     });
 }
