@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Event Signup - Community Support Tracker</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <header>
+    <h1>Community Support Tracker</h1>
+    <nav>
+      <a href="index.html">Donation Tracker</a>
+      <a href="volunteer.html">Volunteer Hours</a>
+      <a href="event-signup.html">Event Signup</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Community Event Registration Portal</h2>
+    <p>Enlist PiXELL River Financial's participation and intended role at upcoming community events.</p>
+
+    <form id="eventSignupForm">
+
+      <div>
+        <label for="eventName">Event Name</label>
+        <input type="text" id="eventName" placeholder="e.g., Annual Charity Gala, Local Food Drive" />
+      </div>
+
+      <div>
+        <label for="repName">Company Representative's Name</label>
+        <input type="text" id="repName" placeholder="Enter full name" />
+      </div>
+
+      <div>
+        <label for="repEmail">Representative's Email</label>
+        <input type="text" id="repEmail" placeholder="e.g., employee@pixellriver.com" />
+      </div>
+
+      <div>
+        <label for="role">Intended Role</label>
+        <select id="role">
+          <option value="">-- Select Intended Role --</option>
+          <option value="sponsor">Sponsor</option>
+          <option value="participant">Participant</option>
+          <option value="organizer">Organizer</option>
+        </select>
+      </div>
+
+      <button type="submit">Sign Up for Event</button>
+
+    </form>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 PiXELL River Financial. Committed to our communities.</p>
+  </footer>
+
+  <script src="event-signup.js"></script>
+</body>
+</html>
