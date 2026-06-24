@@ -7,9 +7,6 @@ function handleSubmit(event) {
     let rating = document.getElementById("rating").value;
 
     let isValid = true;
-
-    console.log(document.getElementById("error"));
-
     document.querySelectorAll(".error-message").forEach(e => e.remove());
 
 
@@ -66,6 +63,9 @@ function handleSubmit(event) {
         date: date,
         rating: Number(rating)
     };
+
+    console.log(volunteerData);
+
 
     let volunteers = JSON.parse(localStorage.getItem("volunteers")) || [];
     volunteers.push(volunteerData);
