@@ -71,6 +71,9 @@ function handleSubmit(event) {
     volunteers.push(volunteerData);
     localStorage.setItem("volunteers", JSON.stringify(volunteers));
 
+    loadVolunteers();
+    totalHours();
+
     return volunteerData;
 }
 
@@ -99,6 +102,7 @@ function loadVolunteers() {
 }
 
 function totalHours() {
+    if (!document.getElementById("totalHours")) return;
 
     let volunteers = JSON.parse(localStorage.getItem("volunteers")) || [];
     let total = 0;
@@ -106,7 +110,7 @@ function totalHours() {
     volunteers.forEach(v => {
         total += Number(v.hoursVolunteered);
     });
-    document.getElementById("totalHours").innerText = total;
+    document.getElementById("totalHours").innerText = String(total);
 }
 
 function deleteVolunteer(index) {
@@ -142,17 +146,23 @@ function showError(inputElement, message) {
 }
 
 
+function init() {
+    const form = document.getElementById("volunteerForm");
+    if (form) {
+        form.addEventListener("submit", handleSubmit);
+    }
+    loadVolunteers();
+    totalHours();
+}
+
 if (typeof window !== "undefined") {
-    window.addEventListener("DOMContentLoaded", () => {
-        const form = document.getElementById("volunteerForm");
-        if (form) {
-            form.addEventListener("submit", handleSubmit);
-        }
-        loadVolunteers()
-        totalHours();
-    });
+    window.addEventListener("DOMContentLoaded", init);
 }
 
 if (typeof module !== "undefined") {
-    module.exports = { handleSubmit };
+    module.exports = { handleSubmit,
+        loadVolunteers,
+        totalHours,
+        deleteVolunteer
+    };
 }

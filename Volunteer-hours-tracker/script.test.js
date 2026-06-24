@@ -6,7 +6,7 @@ const html = fs.readFileSync(
     "utf-8"
 );
 
-const { handleSubmit } = require("./script");
+const { handleSubmit, loadVolunteers, totalHours, deleteVolunteer} = require("./script");
 
 beforeEach(() => {
     document.documentElement.innerHTML = html.toString();
@@ -88,5 +88,107 @@ describe("Volunteer Form Tests", () => {
     });
 
 
+});
+
+
+test("table updates correctly after data is added to localStorage", () => {
+
+    localStorage.setItem("volunteers", JSON.stringify([
+        {
+            charityName: "Foodgrains Bank",
+            hoursVolunteered: 5,
+            date: "2026-06-22",
+            rating: 4
+        }
+    ]));
+
+    loadVolunteers();
+
+    expect(document.querySelectorAll("#tableBody tr").length).toBe(1);
+});
+
+
+test("data from localStorage is displayed in table", () => {
+
+    localStorage.setItem("volunteers", JSON.stringify([
+        {
+            charityName: "Foodgrains Bank",
+            hoursVolunteered: 8,
+            date: "2026-06-24",
+            rating: 5
+        }
+    ]));
+
+    loadVolunteers();
+
+    let table = document.getElementById("tableBody").textContent;
+    expect(table).toContain("Foodgrains Bank");
+    expect(table).toContain("8");
+    expect(table).toContain("2026-06-24");
+    expect(table).toContain("5");
+});
+
+
+
+test("totalHours calculates correctly", () => {
+
+    localStorage.setItem("volunteers", JSON.stringify([
+        {
+            charityName: "Foodgrains Bank",
+            hoursVolunteered: 7
+        },
+        {
+            charityName: "Food Bank",
+            hoursVolunteered: 3
+        }
+    ]));
+
+    totalHours();
+
+    expect(document.getElementById("totalHours").innerText)
+        .toBe("10");
+});
+
+
+test("deleteVolunteer updates localStorage and table correctly ", () => {
+
+    localStorage.setItem("volunteers", JSON.stringify([
+        {
+            charityName: "Foodgrains Bank",
+            hoursVolunteered: 7
+        },
+        {
+            charityName: "Food Bank",
+            hoursVolunteered: 3
+        }
+    ]));
+
+    deleteVolunteer(0);
+
+    let volunteers =
+        JSON.parse(localStorage.getItem("volunteers"));
+
+    expect(volunteers.length).toBe(1);
+});
+
+
+
+test("total hours updates after delete", () => {
+
+    localStorage.setItem("volunteers", JSON.stringify([
+        {
+            charityName: "Foodgrains Bank",
+            hoursVolunteered: 7
+        },
+        {
+            charityName: "Food Bank",
+            hoursVolunteered: 3
+        }
+    ]));
+
+    deleteVolunteer(0);
+
+    expect(document.getElementById("totalHours").innerText)
+        .toBe("3");
 });
 
