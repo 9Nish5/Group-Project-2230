@@ -82,7 +82,7 @@ function loadVolunteers() {
 
     tableBody.innerHTML = "";
 
-    volunteers.forEach(v => {
+    volunteers.forEach((v, index) => {
 
         let row = document.createElement("tr");
 
@@ -91,12 +91,40 @@ function loadVolunteers() {
             <td>${v.hoursVolunteered}</td>
             <td>${v.date}</td>
             <td>${v.rating}</td>
-            <td><button>Delete</button></td>
+            <td><button onclick="deleteVolunteer(${index})">Delete</button></td>
         `;
 
         tableBody.appendChild(row);
     });
 }
+
+function totalHours() {
+
+    let volunteers = JSON.parse(localStorage.getItem("volunteers")) || [];
+    let total = 0;
+
+    volunteers.forEach(v => {
+        total += Number(v.hoursVolunteered);
+    });
+    document.getElementById("totalHours").innerText = total;
+}
+
+function deleteVolunteer(index) {
+    let volunteers = JSON.parse(localStorage.getItem("volunteers")) || [];
+    let newVolunteers = [];
+
+    for (let i = 0; i < volunteers.length; i++) {
+
+        if (i != index) {
+            newVolunteers[newVolunteers.length] = volunteers[i];
+        }
+    }
+
+    localStorage.setItem("volunteers", JSON.stringify(newVolunteers));
+    loadVolunteers();
+    totalHours();
+}
+
 
 function showError(inputElement, message) {
     const container = inputElement.parentElement;
@@ -121,6 +149,7 @@ if (typeof window !== "undefined") {
             form.addEventListener("submit", handleSubmit);
         }
         loadVolunteers()
+        totalHours();
     });
 }
 
