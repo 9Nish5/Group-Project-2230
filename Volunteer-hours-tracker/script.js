@@ -67,7 +67,35 @@ function handleSubmit(event) {
         rating: Number(rating)
     };
 
+    let volunteers = JSON.parse(localStorage.getItem("volunteers")) || [];
+    volunteers.push(volunteerData);
+    localStorage.setItem("volunteers", JSON.stringify(volunteers));
+
     return volunteerData;
+}
+
+function loadVolunteers() {
+
+    let volunteers = JSON.parse(localStorage.getItem("volunteers")) || [];
+
+    let tableBody = document.getElementById("tableBody");
+
+    tableBody.innerHTML = "";
+
+    volunteers.forEach(v => {
+
+        let row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${v.charityName}</td>
+            <td>${v.hoursVolunteered}</td>
+            <td>${v.date}</td>
+            <td>${v.rating}</td>
+            <td><button>Delete</button></td>
+        `;
+
+        tableBody.appendChild(row);
+    });
 }
 
 function showError(inputElement, message) {
@@ -92,6 +120,7 @@ if (typeof window !== "undefined") {
         if (form) {
             form.addEventListener("submit", handleSubmit);
         }
+        loadVolunteers()
     });
 }
 
