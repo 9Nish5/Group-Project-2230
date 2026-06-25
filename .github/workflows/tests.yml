@@ -42,4 +42,6 @@ jobs:
                   files: test-results/jest/*.xml
 
             - name: Run Jest Tests
-              run: npx jest --testMatch="**/*.test.js" --ci
+              run: npx jest --config=jest.config.js --ci --no-cache --watchAll=false
+
+             
