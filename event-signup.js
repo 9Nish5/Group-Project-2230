@@ -120,7 +120,6 @@ function renderSignupsTable(signupsList) {
         tbody.appendChild(row);
     });
 
-    // Bind delete event listeners to the new buttons
     tbody.querySelectorAll(".delete-btn").forEach(btn => {
         btn.addEventListener("click", function() {
             const idx = parseInt(this.getAttribute("data-index"), 10);
@@ -155,6 +154,15 @@ function loadSignupsFromStorage() {
     }
 }
 
+/**
+ * STAGE 2 BOOTSTRAP: Initializes data and initial renders
+ */
+function initApp() {
+    loadSignupsFromStorage();
+    renderSignupsTable(signupsStorage);
+    renderSummaryBreakdown(signupsStorage);
+}
+
 // ==========================================
 // MAIN FORM SUBMISSION HANDLER
 // ==========================================
@@ -182,21 +190,16 @@ function handleEventSignupSubmit(event) {
         return false;
     }
 
-    // 1. Populate Stage 1 Legacy Object
     tempSignupObject = formatSignupData(eventVal, nameVal, emailVal, roleVal);
-
-    // 2. STAGE 2: Push to master array & save to browser local storage
     signupsStorage.push(tempSignupObject);
 
     if (typeof window !== "undefined" && window.localStorage) {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(signupsStorage));
     }
 
-    // 3. Re-render UI
     renderSignupsTable(signupsStorage);
     renderSummaryBreakdown(signupsStorage);
 
-    // 4. Clear the form fields
     const form = document.getElementById("eventSignupForm");
     if (form) form.reset();
 
@@ -208,11 +211,7 @@ if (typeof window !== "undefined") {
     window.addEventListener("DOMContentLoaded", () => {
         const form = document.getElementById("eventSignupForm");
         if (form) form.addEventListener("submit", handleEventSignupSubmit);
-
-        // STAGE 2 BOOTSTRAP: Load existing data safely
-        loadSignupsFromStorage();
-        renderSignupsTable(signupsStorage);
-        renderSummaryBreakdown(signupsStorage);
+        initApp();
     });
 }
 
@@ -225,6 +224,7 @@ if (typeof module !== "undefined" && module.exports) {
         removeSignupByIndex,
         handleEventSignupSubmit,
         handleDeleteSignup,
+        initApp,
         getTempObject: () => tempSignupObject,
         resetTempObject: () => { tempSignupObject = {}; },
         getSignupsStorage: () => signupsStorage,
