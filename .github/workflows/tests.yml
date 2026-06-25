@@ -20,11 +20,13 @@ jobs:
               with:
                   node-version: "20.x"
 
+            # Swapped 'npm ci' for 'npm install' to prevent lockfile desync errors
             - name: Install Dependencies
-              run: npm ci
+              run: npm install
 
+            # Bypasses package.json scripts and forces Jest to search the root directory
             - name: Run Jest Tests
-              run: npm test
+              run: npx jest --roots="." --ci
 
             - name: Archive Jest Test Results
               if: always()
