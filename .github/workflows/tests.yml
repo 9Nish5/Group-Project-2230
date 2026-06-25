@@ -40,3 +40,6 @@ jobs:
               if: always()
               with:
                   files: test-results/jest/*.xml
+
+            - name: Run Jest Tests
+              run: npx jest --testMatch="**/*.test.js" --ci
