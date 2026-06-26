@@ -22,8 +22,16 @@ jobs:
             - name: Install Dependencies
               run: npm install
 
+            # Executes strictly via your JSDOM config file
             - name: Run Jest Tests
               run: npx jest --config=jest.config.js --ci --no-cache --watchAll=false
+
+            - name: Archive Jest Test Results
+              if: always()
+              uses: actions/upload-artifact@v4
+              with:
+                  name: jest-test-results
+                  path: test-results/jest/
 
             - name: Publish Test Results
               uses: EnricoMi/publish-unit-test-result-action@v2

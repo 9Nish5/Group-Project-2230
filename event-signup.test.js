@@ -14,7 +14,6 @@ const {
 describe("Event Signup Component - Stage Two Rubric Tests", () => {
 
     beforeEach(() => {
-        // Inject fresh HTML directly into Jest's built-in JSDOM document
         document.body.innerHTML = `
           <form id="eventSignupForm">
             <input type="text" id="eventName" />
@@ -43,10 +42,6 @@ describe("Event Signup Component - Stage Two Rubric Tests", () => {
         setSignupsStorage([]);
     });
 
-    // ==========================================
-    // STAGE TWO INTEGRATION TESTS
-    // ==========================================
-
     test("Integration 1: Submitting form updates table and saves to localStorage", () => {
         document.getElementById("eventName").value = "Park Cleanup";
         document.getElementById("repName").value = "Nishant";
@@ -70,7 +65,6 @@ describe("Event Signup Component - Stage Two Rubric Tests", () => {
         ];
         localStorage.setItem(STORAGE_KEY, JSON.stringify(fakePriorSession));
 
-        // Directly trigger application bootstrap instead of dispatching synthetic events
         initApp();
 
         const rows = document.querySelectorAll("#signupTableBody tr");
@@ -79,10 +73,6 @@ describe("Event Signup Component - Stage Two Rubric Tests", () => {
         
         expect(document.getElementById("countOrganizer").textContent).toBe("1");
     });
-
-    // ==========================================
-    // STAGE TWO UNIT TESTS
-    // ==========================================
 
     test("Unit 1: calculateRoleBreakdown outputs correct mathematical role tallies", () => {
         const dummySignups = [
