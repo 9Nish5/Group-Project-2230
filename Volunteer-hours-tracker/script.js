@@ -7,9 +7,6 @@ function handleSubmit(event) {
     let rating = document.getElementById("rating").value;
 
     let isValid = true;
-
-    console.log(document.getElementById("error"));
-
     document.querySelectorAll(".error-message").forEach(e => e.remove());
 
 
@@ -67,8 +64,71 @@ function handleSubmit(event) {
         rating: Number(rating)
     };
 
+    console.log(volunteerData);
+
+
+    let volunteers = JSON.parse(localStorage.getItem("volunteers")) || [];
+    volunteers.push(volunteerData);
+    localStorage.setItem("volunteers", JSON.stringify(volunteers));
+
+    loadVolunteers();
+    totalHours();
+
     return volunteerData;
 }
+
+function loadVolunteers() {
+
+    let volunteers = JSON.parse(localStorage.getItem("volunteers")) || [];
+
+    let tableBody = document.getElementById("tableBody");
+
+    tableBody.innerHTML = "";
+
+    volunteers.forEach((v, index) => {
+
+        let row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${v.charityName}</td>
+            <td>${v.hoursVolunteered}</td>
+            <td>${v.date}</td>
+            <td>${v.rating}</td>
+            <td><button onclick="deleteVolunteer(${index})">Delete</button></td>
+        `;
+
+        tableBody.appendChild(row);
+    });
+}
+
+function totalHours() {
+    if (!document.getElementById("totalHours")) return;
+
+    let volunteers = JSON.parse(localStorage.getItem("volunteers")) || [];
+    let total = 0;
+
+    volunteers.forEach(v => {
+        total += Number(v.hoursVolunteered);
+    });
+    document.getElementById("totalHours").innerText = String(total);
+}
+
+function deleteVolunteer(index) {
+    let volunteers = JSON.parse(localStorage.getItem("volunteers")) || [];
+    let newVolunteers = [];
+
+    for (let i = 0; i < volunteers.length; i++) {
+
+        if (i != index) {
+            newVolunteers[newVolunteers.length] = volunteers[i];
+        }
+    }
+
+    localStorage.setItem("volunteers", JSON.stringify(newVolunteers));
+    loadVolunteers();
+    totalHours();
+}
+
 
 function showError(inputElement, message) {
     const container = inputElement.parentElement;
@@ -86,15 +146,23 @@ function showError(inputElement, message) {
 }
 
 
+function init() {
+    const form = document.getElementById("volunteerForm");
+    if (form) {
+        form.addEventListener("submit", handleSubmit);
+    }
+    loadVolunteers();
+    totalHours();
+}
+
 if (typeof window !== "undefined") {
-    window.addEventListener("DOMContentLoaded", () => {
-        const form = document.getElementById("volunteerForm");
-        if (form) {
-            form.addEventListener("submit", handleSubmit);
-        }
-    });
+    window.addEventListener("DOMContentLoaded", init);
 }
 
 if (typeof module !== "undefined") {
-    module.exports = { handleSubmit };
+    module.exports = { handleSubmit,
+        loadVolunteers,
+        totalHours,
+        deleteVolunteer
+    };
 }
