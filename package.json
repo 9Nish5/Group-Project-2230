@@ -19,7 +19,11 @@
   },
   "homepage": "https://github.com/9Nish5/Group-Project-2230#readme",
   "devDependencies": {
+<<<<<<< HEAD
+    "jest": "^30.4.2",
+=======
     "jest": "^25.0.0",
+>>>>>>> 41118fdfdfeb3cba8c611d19f30535dbd35dfd28
     "jest-environment-jsdom": "^30.4.1"
   }
 }
