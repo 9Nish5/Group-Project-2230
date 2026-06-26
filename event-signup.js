@@ -159,8 +159,12 @@ function loadSignupsFromStorage() {
  */
 function initApp() {
     loadSignupsFromStorage();
-    renderSignupsTable(signupsStorage);
-    renderSummaryBreakdown(signupsStorage);
+    if (document.getElementById("signupTableBody")) {
+        renderSignupsTable(signupsStorage);
+    }
+    if (document.getElementById("countSponsor")) {
+        renderSummaryBreakdown(signupsStorage);
+    }  
 }
 
 // ==========================================

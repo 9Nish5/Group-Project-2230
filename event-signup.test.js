@@ -1,4 +1,3 @@
-const { JSDOM } = require("jsdom");
 const {
     validateSignupInput,
     formatSignupData,
@@ -15,43 +14,30 @@ const {
 describe("Event Signup Component - Stage Two Rubric Tests", () => {
 
     beforeEach(() => {
-        // Instantiate headless JSDOM browser explicitly for Node CI environments
-        const dom = new JSDOM(`
-          <!DOCTYPE html>
-          <html>
-          <body>
-            <form id="eventSignupForm">
-              <div><input type="text" id="eventName" /></div>
-              <div><input type="text" id="repName" /></div>
-              <div><input type="text" id="repEmail" /></div>
-              <div>
-                <select id="role">
-                  <option value=""></option>
-                  <option value="sponsor">Sponsor</option>
-                  <option value="participant">Participant</option>
-                  <option value="organizer">Organizer</option>
-                </select>
-              </div>
-            </form>
+        // Inject fresh HTML directly into Jest's built-in JSDOM document
+        document.body.innerHTML = `
+          <form id="eventSignupForm">
+            <input type="text" id="eventName" />
+            <input type="text" id="repName" />
+            <input type="text" id="repEmail" />
+            <select id="role">
+              <option value=""></option>
+              <option value="sponsor">Sponsor</option>
+              <option value="participant">Participant</option>
+              <option value="organizer">Organizer</option>
+            </select>
+          </form>
 
-            <section id="upcomingEventsSummary">
-              <span id="countSponsor">0</span>
-              <span id="countParticipant">0</span>
-              <span id="countOrganizer">0</span>
-            </section>
+          <section id="upcomingEventsSummary">
+            <span id="countSponsor">0</span>
+            <span id="countParticipant">0</span>
+            <span id="countOrganizer">0</span>
+          </section>
 
-            <table>
-              <tbody id="signupTableBody"></tbody>
-            </table>
-          </body>
-          </html>
-        `, { url: "http://localhost" });
-
-        // Bind JSDOM simulated browser globals to Node runtime
-        global.window = dom.window;
-        global.document = dom.window.document;
-        global.localStorage = dom.window.localStorage;
-        global.Event = dom.window.Event;
+          <table>
+            <tbody id="signupTableBody"></tbody>
+          </table>
+        `;
 
         localStorage.clear();
         setSignupsStorage([]);
@@ -84,7 +70,7 @@ describe("Event Signup Component - Stage Two Rubric Tests", () => {
         ];
         localStorage.setItem(STORAGE_KEY, JSON.stringify(fakePriorSession));
 
-        // Trigger exported application bootstrap directly
+        // Directly trigger application bootstrap instead of dispatching synthetic events
         initApp();
 
         const rows = document.querySelectorAll("#signupTableBody tr");
