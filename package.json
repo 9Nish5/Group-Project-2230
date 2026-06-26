@@ -2,7 +2,7 @@
   "name": "group-project-2230",
   "version": "1.0.0",
   "description": "",
-  "main": "donation.js",
+  "main": "event-signup.js",
   "scripts": {
     "test": "jest"
   },
@@ -19,11 +19,8 @@
   },
   "homepage": "https://github.com/9Nish5/Group-Project-2230#readme",
   "devDependencies": {
-<<<<<<< HEAD
     "jest": "^30.4.2",
-=======
-    "jest": "^25.0.0",
->>>>>>> 41118fdfdfeb3cba8c611d19f30535dbd35dfd28
-    "jest-environment-jsdom": "^30.4.1"
+    "jest-environment-jsdom": "^30.4.1",
+    "jest-junit": "^17.0.0"
   }
 }
