@@ -58,3 +58,16 @@ th, td {
 h3 {
   margin-top: 20px;
 }
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Layout Assistance */
+#roleBreakdown {
+  display: flex;
+  gap: 20px;
+  background: #e9ecef;
+  padding: 15px;
+  border-radius: 6px;
+}
